@@ -11,15 +11,20 @@ import android.graphics.Paint;
 import android.view.View;
 
 public class Ball extends View {
-    int x, y, radius, vx, vy;
+    int x, y, radius, vx, vy, screenWidth, screenHight;
+    int defaultV, maxV;
     Paint paint;
 
-    public Ball(Context context) {
+    public Ball(Context context, int width, int height) {
         super(context);
+        screenWidth = width;
+        screenHight = height;
         radius = 30;
-        x = y = 0;
+        x = width / 2;
+        y = height / 2;
         vx = 0;
-        vy = 10;
+        vy = defaultV = 10;
+        maxV = 100;
         paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
@@ -30,23 +35,23 @@ public class Ball extends View {
         canvas.drawCircle(x, y, radius, paint);
     }
 
-    public void update(int width, int height) {
+    public void update() {
         x += vx;
         y += vy;
 
         if (x <= radius) {
             x = radius;
             vx = -vx;
-        } else if (x >= width - radius) {
-            x = width - radius;
+        } else if (x >= screenWidth - radius) {
+            x = screenWidth - radius;
             vx = -vx;
         }
 
         if (y <= radius) {
             y = radius;
             vy = - vy;
-        } else if (y >= height - radius) {
-            y = height - radius;
+        } else if (y >= screenHight - radius) {
+            y = screenHight - radius;
             vy = - vy;
         }
     }
