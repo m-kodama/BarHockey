@@ -22,7 +22,7 @@ public class MainActivity extends Activity implements Runnable {
     Ball ball;
     Handler handler;
     int width, height;
-    int time = 10;
+    int time = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
