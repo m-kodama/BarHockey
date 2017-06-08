@@ -12,7 +12,8 @@ import android.view.View;
 
 public class Ball extends View {
     int x, y, radius, vx, vy, screenWidth, screenHight;
-    int defaultV, maxV;
+    int  maxV;
+    double reflectionRate;
     Paint paint;
 
     public Ball(Context context, int width, int height) {
@@ -22,9 +23,10 @@ public class Ball extends View {
         radius = 30;
         x = width / 2;
         y = height / 2;
-        vx = 0;
-        vy = defaultV = 10;
+        vx = 2;
+        vy = 10;
         maxV = 100;
+        reflectionRate = 1.1;
         paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
@@ -53,6 +55,54 @@ public class Ball extends View {
         } else if (y >= screenHight - radius) {
             y = screenHight - radius;
             vy = - vy;
+        }
+    }
+
+    public void reflect(int collisionPoint, Bar bar) {
+        // collisionPoint 1:上で衝突，2:右で衝突，3:下で衝突，4:左で衝突，5:上で衝突，6:右で衝突，7:下で衝突，8:左で衝突
+        switch(collisionPoint) {
+            case 1:
+                y = bar.top-radius;
+                vy = (int)(vy * reflectionRate * -1);
+                break;
+            case 2:
+                x = bar.right+radius;
+                vx = (int)(vx * reflectionRate * -1);
+                break;
+            case 3:
+                y = bar.bottom+radius;
+                vy = (int)(vy * reflectionRate * -1);
+                break;
+            case 4:
+                x = bar.left-radius;
+                vx = (int)(vx * reflectionRate * -1);
+                break;
+            case 5:
+                x = bar.right;
+                y = bar.top;
+                vx = -vx;
+                vy = -vy;
+                break;
+            case 6:
+                x = bar.right;
+                y = bar.bottom;
+                vx = -vx;
+                vy = -vy;
+                break;
+            case 7:
+                x = bar.left;
+                y = bar.bottom;
+                vx = -vx;
+                vy = -vy;
+                break;
+            case 8:
+                x = bar.left;
+                y = bar.top;
+                vx = -vx;
+                vy = -vy;
+                break;
+            default:
+                break;
         }
     }
 }

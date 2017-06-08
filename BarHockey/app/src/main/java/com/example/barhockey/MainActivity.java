@@ -64,15 +64,17 @@ public class MainActivity extends Activity implements Runnable {
     public void run() {
         ball.update();
 
-        int ballTop = ball.y-ball.radius;
-        int ballBottom = ball.y+ball.radius;
-        if(ballTop <=  yourBar.bottom) {
-            ball.y = yourBar.bottom+ball.radius;
-            ball.vy = ball.vy > 0 ? -1 * (ball.vy + ball.defaultV/5) : -1 * (ball.vy - ball.defaultV/5);
-        } else if(ballBottom >=  myBar.top) {
-            ball.y = myBar.top-ball.radius;
-            ball.vy =ball.vy > 0 ? -1 * (ball.vy + ball.defaultV/5) : -1 * (ball.vy - ball.defaultV/5);
+        // yourBarとの衝突判定
+        int collisionPoint = yourBar.isCollision(ball);
+        if(collisionPoint != 0) {
+            ball.reflect(collisionPoint, yourBar);
         }
+        // myBarとの衝突判定
+        collisionPoint = myBar.isCollision(ball);
+        if(collisionPoint != 0) {
+            ball.reflect(collisionPoint, myBar);
+        }
+
 
         ball.invalidate();
         myBar.invalidate();
