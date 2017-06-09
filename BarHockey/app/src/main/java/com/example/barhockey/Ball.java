@@ -20,7 +20,7 @@ public class Ball extends View {
         super(context);
         screenWidth = width;
         screenHight = height;
-        radius = 30;
+        radius = 300;
         x = width / 2;
         y = height / 2;
         vx = 2;
