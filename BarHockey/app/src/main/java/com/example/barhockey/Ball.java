@@ -78,28 +78,24 @@ public class Ball extends View {
                 vx = (int)(vx * reflectionRate * -1);
                 break;
             case 5:
-                x = bar.right;
-                y = bar.top;
-                vx = -vx;
+                vx = vx < 0 ? -vx : vx;
                 vy = -vy;
                 break;
             case 6:
-                x = bar.right;
-                y = bar.bottom;
-                vx = -vx;
+                vx = vx < 0 ? -vx : vx;
                 vy = -vy;
                 break;
             case 7:
-                x = bar.left;
-                y = bar.bottom;
-                vx = -vx;
+                vx = vx < 0 ? vx : -vx;
                 vy = -vy;
                 break;
             case 8:
-                x = bar.left;
-                y = bar.top;
-                vx = -vx;
+                vx = vx < 0 ? vx : -vx;
                 vy = -vy;
+                break;
+            case 9:
+                y = bar.top-radius;
+                vy = (int)(vy * reflectionRate * -1.5);
                 break;
             default:
                 break;

@@ -50,11 +50,14 @@ public class Bar extends View {
         this.y = y;
     }
 
-    // return 0:衝突なし，1:上で衝突，2:右で衝突，3:下で衝突，4:左で衝突，5:上で衝突，6:右で衝突，7:下で衝突，8:左で衝突
+    // return 0:衝突なし，1:上で衝突，2:右で衝突，3:下で衝突，4:左で衝突，5:上で衝突，6:右で衝突，7:下で衝突，8:左で衝突，9：ストライクゾーンで衝突
     public int isCollision(Ball ball) {
         if(top-ball.radius > y || bottom+ball.radius < y || left-ball.radius > x || right+ball.radius < x) { // 衝突なし
             return 0;
         } else if(top-ball.radius <= ball.y && ball.y <= y && left <= ball.x && ball.x <= right) {      // 上で衝突
+            if(x-zone <= ball.x && ball.x <= x+zone) {  // ストライクゾーンで衝突
+                return 9;
+            }
             return 1;
         } else if(top <= ball.y && ball.y <= bottom && right+ball.radius >= ball.x && ball.x >= x) {    // 右で衝突
             return 2;
