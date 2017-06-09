@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements Runnable {
                 (WindowManager)getSystemService(WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         Point point = new Point();
-        display.getSize(point);
+        //display.getSize(point);
         width = point.x;
         height = point.y;
         ball = new Ball(this);
