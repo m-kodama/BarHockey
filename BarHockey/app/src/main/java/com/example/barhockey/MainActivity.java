@@ -20,9 +20,11 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity implements Runnable {
     Ball ball;
+    Bar myBar, yourBar;
     Handler handler;
     int width, height;
-    int time = 10;
+    int time = 2;
+    int touchSpaceRate = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +46,39 @@ public class MainActivity extends Activity implements Runnable {
         display.getSize(point);
         width = point.x;
         height = point.y;
-        ball = new Ball(this);
-        ball.x = width / 2;
-        ball.y = height / 2;
+        // ボール
+        ball = new Ball(this, width, height);
         relativeLayout.addView(ball);
+        // プレイヤーバー
+        myBar = new Bar(this, width, height);
+        myBar.setPosition(width/2, height-(height/touchSpaceRate));
+        relativeLayout.addView(myBar);
+        // 相手プレイヤーバー
+        yourBar = new Bar(this, width, height);
+        yourBar.setPosition(width/2, height/touchSpaceRate);
+        relativeLayout.addView(yourBar);
+
+
     }
     @Override
     public void run() {
-        ball.update(width, height);
+        ball.update();
+
+        // yourBarとの衝突判定
+        int collisionPoint = yourBar.isCollision(ball);
+        if(collisionPoint != 0) {
+            ball.reflect(collisionPoint, yourBar);
+        }
+        // myBarとの衝突判定
+        collisionPoint = myBar.isCollision(ball);
+        if(collisionPoint != 0) {
+            ball.reflect(collisionPoint, myBar);
+        }
+
 
         ball.invalidate();
+        myBar.invalidate();
+        yourBar.invalidate();
         handler.postDelayed(this, time);
     }
     public void onDestroy() {
