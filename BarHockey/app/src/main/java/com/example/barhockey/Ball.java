@@ -23,7 +23,7 @@ public class Ball extends View {
         radius = 30;
         x = width / 2;
         y = height / 2;
-        vx = 2;
+        vx = 3;
         vy = 10;
         maxV = 100;
         reflectionRate = 1.1;
